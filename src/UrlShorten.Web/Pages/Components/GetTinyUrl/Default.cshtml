@@ -1,0 +1,56 @@
+﻿@model UrlShorten.Service.TinyUrls.Dto.UrlMapOutput
+
+<h4>Edit</h4>
+<form method="post">
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Shorten URL</th>
+                        <th>Original URL</th>
+                        <th>Click</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.Title</td>
+                        <td>@Model.Description</td>
+                        <td>@Model.ShortenUrl</td>
+                        <td>@Model.RawUrl</td>
+                        <td>@Model.HitCount</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-sm-12">
+
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <input type="text" asp-for="Title" asp-page="EditTinyUrl" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input type="text" asp-for="Description" asp-page="EditTinyUrl"  class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RawUrl">Original Url</label>
+                <input type="text" asp-for="RawUrl" asp-page="EditTinyUrl"  class="form-control">
+            </div>
+
+        </div>
+
+
+        <div class="col-sm-12">
+            <a class="btn btn-outline-dark" asp-area="" asp-page="/Index">Cancel</a>
+
+            <button type="submit" class="btn btn-outline-info" asp-page="About">Save</button>
+        </div>
+    </div>
+
+</form>

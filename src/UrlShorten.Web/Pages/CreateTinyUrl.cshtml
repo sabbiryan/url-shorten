@@ -1,0 +1,35 @@
+﻿@page
+@model UrlShorten.Service.TinyUrls.Dto.UrlMapInput
+
+<h4>Edit</h4>
+<form method="post">
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="form-group">
+                <label asp-for="@Model.Title"></label>
+                <input type="text" asp-for="Title" asp-page="EditTinyUrl" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input type="text" asp-for="Description" asp-page="EditTinyUrl" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RawUrl">Original Url</label>
+                <input type="text" asp-for="RawUrl" asp-page="EditTinyUrl" class="form-control">
+            </div>
+
+        </div>
+
+
+        <div class="col-sm-12">
+            <a class="btn btn-outline-dark" asp-area="" asp-page="/Index">Cancel</a>
+
+            <button type="submit" class="btn btn-outline-info" asp-page="About">Save</button>
+        </div>
+    </div>
+
+</form>
