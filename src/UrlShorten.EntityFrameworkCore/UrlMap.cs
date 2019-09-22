@@ -12,7 +12,7 @@ namespace UrlShorten.EntityFrameworkCore
 
         public string Description { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Identity { get; set; }
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using UrlShorten.Service.TinyUrls;
 using UrlShorten.Service.TinyUrls.Dto;
 
-namespace UrlShorten.Web.Pages
+namespace UrlShorten.Web.Pages.TinyUrl
 {
     public class CreateTinyUrlModel : PageModel
     {
@@ -22,7 +22,7 @@ namespace UrlShorten.Web.Pages
         }
 
 
-        public async Task<UrlMapOutput> OnPost([FromBody] UrlMapInput input)
+        public async Task<UrlMapOutput> OnPostAsync(UrlMapInput input)
         {
             return await _tinyUrlService.Create(input);
         }

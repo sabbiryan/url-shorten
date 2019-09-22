@@ -1,0 +1,42 @@
+﻿@page
+@model UrlShorten.Web.Pages.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+    <h4>Edit an existing tiny url</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UrlMap.Title" class="control-label"></label>
+                <input asp-for="UrlMap.Title" class="form-control" />
+                <span asp-validation-for="UrlMap.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlMap.Description" class="control-label"></label>
+                <input asp-for="UrlMap.Description" class="form-control" />
+                <span asp-validation-for="UrlMap.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlMap.RawUrl" class="control-label">Url</label>
+                <input asp-for="UrlMap.RawUrl" class="form-control"  readonly="readonly"/>
+                <span asp-validation-for="UrlMap.RawUrl"  class="text-danger"></span>
+            </div>
+            
+            <input type="hidden" asp-for="UrlMap.Id" />
+            
+            <div class="form-group">
+                <a asp-page="./Index" class="btn btn-outline-dark">Back</a>
+                <input type="submit" value="Save" class="btn btn-outline-info" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

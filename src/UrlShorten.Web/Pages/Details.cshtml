@@ -1,0 +1,98 @@
+﻿@page
+@model UrlShorten.Web.Pages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h4>View details of a tiny url</h4>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UrlMap.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UrlMap.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.Description)
+        </dd>
+        <dt class="col-sm-2">
+            Shorten Url
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.ShortenUrl)
+        </dd>
+        <dt class="col-sm-2">
+            Original Url
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.RawUrl)
+        </dd>
+        <dt class="col-sm-2">
+            Click
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.HitCount)
+        </dd>
+        
+        <dt class="col-sm-2">
+            Creation Time
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.CreationTime)
+        </dd>
+
+        <dt class="col-sm-2">
+            Modification Time
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.ModificationTime)
+        </dd>
+        <dt class="col-sm-2">
+            Deleted?
+        </dt>
+        <dd class="col-sm-10">
+            @if (@Model.UrlMap.IsDeleted)
+            {
+                <span>Yes</span>
+            }
+            else
+            {
+                <span>No</span>
+            }
+        </dd>
+        
+        @if (@Model.UrlMap.IsDeleted)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UrlMap.DeletionTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UrlMap.DeletionTime)
+            </dd>
+        }
+        <dt class="col-sm-2">
+            IP Address
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.IpAddress)
+        </dd>
+        <dt class="col-sm-2">
+            Device Info
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.DeviceInfo)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Index" class="btn btn-outline-dark">Back</a>
+    <a asp-page="./Edit" asp-route-id="@Model.UrlMap.Id" class="btn btn-outline-info">Edit</a> 
+    <a asp-page="./Create" class="btn btn-outline-info">Create</a> 
+</div>

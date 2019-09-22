@@ -1,0 +1,78 @@
+﻿@page
+@model UrlShorten.Web.Pages.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h4>Delete tiny url</h4>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UrlMap.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UrlMap.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.Description)
+        </dd>
+        <dt class="col-sm-2">
+            Shorten Url
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.ShortenUrl)
+        </dd>
+        <dt class="col-sm-2">
+            Original Url
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.RawUrl)
+        </dd>
+        <dt class="col-sm-2">
+            Click
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.HitCount)
+        </dd>
+
+        <dt class="col-sm-2">
+            Creation Time
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.CreationTime)
+        </dd>
+
+        <dt class="col-sm-2">
+            Modification Time
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.ModificationTime)
+        </dd>
+
+        <dt class="col-sm-2">
+            IP Address
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.IpAddress)
+        </dd>
+        <dt class="col-sm-2">
+            Device Info
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UrlMap.DeviceInfo)
+        </dd>
+    </dl>
+
+    <h6>Are you sure you want to delete this tiny url?</h6>
+    <form method="post">
+        <input type="hidden" asp-for="UrlMap.Id" />
+        <a asp-page="./Index" class="btn btn-outline-dark">Back </a>
+        <input type="submit" value="Yes, Delete" class="btn btn-outline-danger" />
+    </form>
+</div>

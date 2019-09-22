@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace UrlShorten.EntityFrameworkCore
 {
@@ -10,6 +11,12 @@ namespace UrlShorten.EntityFrameworkCore
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
         {
             
+        }
+
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UrlMap>().Property(e => e.Identity).Metadata.AfterSaveBehavior = PropertySaveBehavior.Ignore;
         }
 
 

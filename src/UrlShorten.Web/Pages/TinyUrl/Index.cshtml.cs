@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace UrlShorten.Web.Pages
+namespace UrlShorten.Web.Pages.TinyUrl
 {
-    public class EditTinyUrlModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {

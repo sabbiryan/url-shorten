@@ -1,0 +1,10 @@
+﻿@page
+@using UrlShorten.Web.Pages.Components.TinyUrlGrid
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+
+@await Component.InvokeAsync("TinyUrlGrid", new { sorting = "", skip = 0, take = 10 })
+

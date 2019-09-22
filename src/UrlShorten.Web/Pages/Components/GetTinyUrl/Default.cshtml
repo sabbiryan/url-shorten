@@ -30,7 +30,7 @@
 
             <div class="form-group">
                 <label asp-for="Title"></label>
-                <input type="text" asp-for="Title" asp-page="EditTinyUrl" class="form-control">
+                <input type="text" asp-for="Title" asp-page="EditTinyUrl" class="form-control" required="required">
             </div>
 
             <div class="form-group">
@@ -39,8 +39,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="RawUrl">Original Url</label>
-                <input type="text" asp-for="RawUrl" asp-page="EditTinyUrl"  class="form-control">
+                <label asp-for="RawUrl">Url</label>
+                <input type="url" asp-for="RawUrl" asp-page="EditTinyUrl"  class="form-control" required="required">
             </div>
 
         </div>

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace UrlShorten.EntityFrameworkCore.Repositories
@@ -35,6 +38,7 @@ namespace UrlShorten.EntityFrameworkCore.Repositories
         public T Create(T entity)
         {
             entity.CreationTime = DateTime.UtcNow;
+            entity.IpAddress = GetLocalIpAddress();
 
             var entityEntry = _dbContext.Set<T>().Add(entity);
 
@@ -48,6 +52,7 @@ namespace UrlShorten.EntityFrameworkCore.Repositories
         public async Task<T> CreateAsync(T entity)
         {
             entity.CreationTime = DateTime.UtcNow;
+            entity.IpAddress = GetLocalIpAddress();
 
             var entityEntry = await _dbContext.Set<T>().AddAsync(entity);
 
@@ -61,6 +66,7 @@ namespace UrlShorten.EntityFrameworkCore.Repositories
         public T Update(T entity)
         {
             entity.ModificationTime = DateTime.UtcNow;
+            entity.IpAddress = GetLocalIpAddress();
 
             _dbContext.Entry(entity).State = EntityState.Modified;
 
@@ -72,6 +78,7 @@ namespace UrlShorten.EntityFrameworkCore.Repositories
         public Task<T> UpdateAsync(T entity)
         {
             entity.ModificationTime = DateTime.UtcNow;
+            entity.IpAddress = GetLocalIpAddress();
 
             _dbContext.Entry(entity).State = EntityState.Modified;
 
@@ -84,7 +91,12 @@ namespace UrlShorten.EntityFrameworkCore.Repositories
         {
             entity.DeletionTime = DateTime.UtcNow;
 
-            _dbContext.Entry(entity).State = EntityState.Deleted;
+            //_dbContext.Entry(entity).State = EntityState.Deleted;
+
+            entity.IsDeleted = true;
+            entity.DeletionTime = DateTime.Now;
+            entity.IpAddress = GetLocalIpAddress();
+            _dbContext.Attach(entity).State = EntityState.Modified;
 
             _dbContext.SaveChanges();
         }
@@ -93,7 +105,13 @@ namespace UrlShorten.EntityFrameworkCore.Repositories
         {
             entity.DeletionTime = DateTime.UtcNow;
 
-            _dbContext.Entry(entity).State = EntityState.Deleted;
+            //_dbContext.Entry(entity).State = EntityState.Deleted;
+
+            entity.IsDeleted = true;
+            entity.DeletionTime = DateTime.Now;
+            entity.IpAddress = GetLocalIpAddress();
+            _dbContext.Attach(entity).State = EntityState.Modified;
+            
 
             _dbContext.SaveChanges();
 
@@ -103,7 +121,14 @@ namespace UrlShorten.EntityFrameworkCore.Repositories
         public void Delete(TKey id)
         {
             var entity = Get(id);
-            _dbContext.Set<T>().Remove(entity);
+
+            //_dbContext.Set<T>().Remove(entity);
+
+            entity.IsDeleted = true;
+            entity.DeletionTime = DateTime.Now;
+            entity.IpAddress = GetLocalIpAddress();
+            _dbContext.Attach(entity).State = EntityState.Modified;
+
 
             _dbContext.SaveChanges();
         }
@@ -115,11 +140,33 @@ namespace UrlShorten.EntityFrameworkCore.Repositories
 
             var entity = task.GetAwaiter().GetResult();
 
-            _dbContext.Set<T>().Remove(entity);
+            //_dbContext.Set<T>().Remove(entity);
+
+            entity.IsDeleted = true;
+            entity.DeletionTime = DateTime.Now;
+            entity.IpAddress = GetLocalIpAddress();
+            _dbContext.Attach(entity).State = EntityState.Modified;
 
             _dbContext.SaveChanges();
 
             return Task.FromResult(entity);
         }
+
+
+        private static string GetLocalIpAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+
+            return null;
+        }
+
+
     }
 }

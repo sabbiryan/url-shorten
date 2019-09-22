@@ -16,6 +16,7 @@ namespace UrlShorten.Web.Controllers
         public TinyUrlController(ITinyUrlService tinyUrlService)
         {
             _tinyUrlService = tinyUrlService;
+            //_tinyUrlService.SetUserAgent(Request.Headers["User-Agent"]);
         }
 
         // GET: api/TinyUrl

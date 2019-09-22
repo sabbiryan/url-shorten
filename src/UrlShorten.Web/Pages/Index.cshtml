@@ -1,10 +1,72 @@
 ﻿@page
-@using UrlShorten.Web.Pages.Components.TinyUrlGrid
+@model UrlShorten.Web.Pages.IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Tiny Urls";
 }
 
+<h4>
+    Tiny Urls <a class="btn btn-outline-info" asp-page="Create">Create</a>
+</h4>
 
-
-@await Component.InvokeAsync("TinyUrlGrid", new { sorting = "", skip = 0, take = 10 })
-
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Title 
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Shorten Url
+            </th>
+            <th>
+                Original Url
+            </th>
+            <th>
+                Click
+            </th>
+           
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.UrlMap) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortenUrlView)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RawUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HitCount)
+            </td>
+           
+            <td>
+                @if (!item.IsDeleted)
+                {
+                    <span>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </span>
+                }
+                else
+                {
+                    <span class="badge badge-warning">Deleted</span>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
