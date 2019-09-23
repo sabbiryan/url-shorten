@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DeviceDetector.NET.NetCore" Version="3.9.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
   </ItemGroup>

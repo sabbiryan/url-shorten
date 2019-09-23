@@ -61,7 +61,8 @@ namespace UrlShorten.Service.TinyUrls
             var existingUrlMap = await _urlMaRepository.GetAll().AsNoTracking()
                 .FirstOrDefaultAsync(x => x.RawUrl == input.RawUrl);
 
-            if(existingUrlMap != null) return new UrlMapOutput(existingUrlMap);
+            if(existingUrlMap != null) throw new Exception($"An existing item with same url already exist"); 
+            //return new UrlMapOutput(existingUrlMap);
 
             var urlMap = await _urlMaRepository.CreateAsync(new UrlMap()
             {
@@ -101,6 +102,12 @@ namespace UrlShorten.Service.TinyUrls
         public async Task Delete(string id)
         {
             await _urlMaRepository.DeleteAsync(id);
+        }
+
+
+        public async Task<bool> IsUrlExist(string url, string id)
+        {
+            return await _urlMaRepository.GetAll().AnyAsync(x => x.RawUrl == url && x.Id != id);
         }
 
         public async Task<bool> IsExist(string id)
