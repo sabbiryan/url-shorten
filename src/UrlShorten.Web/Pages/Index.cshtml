@@ -41,6 +41,9 @@
         <th>
             Click
         </th>
+        <th>
+            Created
+        </th>
 
         <th>
             Action
@@ -66,7 +69,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.HitCount)
             </td>
-
+            <td>
+                @item.CreationTime.ToShortDateString()
+            </td>
             <td>
                 @if (!item.IsDeleted)
                 {
