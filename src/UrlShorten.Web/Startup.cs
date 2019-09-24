@@ -14,6 +14,7 @@ using UrlShorten.EntityFrameworkCore;
 using UrlShorten.EntityFrameworkCore.Repositories;
 using UrlShorten.Service.TinyUrls;
 using UrlShorten.Web.Extensions;
+using UrlShorten.Web.Filters;
 
 namespace UrlShorten.Web
 {
@@ -45,7 +46,11 @@ namespace UrlShorten.Web
                     providerOptions => providerOptions.CommandTimeout(60))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(service =>
+                {
+                    service.Filters.Add(typeof(UrlMovePermanentlyFilter));
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddLogging();
 

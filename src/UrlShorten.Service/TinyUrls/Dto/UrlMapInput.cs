@@ -13,7 +13,7 @@ namespace UrlShorten.Service.TinyUrls.Dto
         
 
         [Required(ErrorMessage = "Please enter a url")]
-        [RegularExpression("^http(s)?://((www.)+)?([\\w-]+.)+[\\w-]+(/(#!/)?[\\w- ./?%&#!=])?$", ErrorMessage = "Please enter a valid url")]
+        [RegularExpression("^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$", ErrorMessage = "Please enter a valid url")]
         public string RawUrl { get; set; }
 
     }

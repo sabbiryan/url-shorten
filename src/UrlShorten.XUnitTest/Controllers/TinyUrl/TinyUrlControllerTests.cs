@@ -29,7 +29,7 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
         public async Task GetAll_ShouldReturn_10Items()
         {
             //Arrange
-            //Use base arrange
+            //Using base arrange
 
             //Act
             var outputs = await _controller.Get(new UrlMapFilterInput());
@@ -56,13 +56,13 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
         }
 
         [Fact]
-        public async Task GetAll_ShouldReturn_ListOfUrlMapOutputType()
+        public async Task GetAll_ShouldReturn_ListOfUrlMapPageOutputType()
         {
             var outputs = await _controller.Get(new UrlMapFilterInput());
 
-            var result = Assert.IsType<List<UrlMapOutput>>(outputs);
+            var result = Assert.IsType<UrlMapPageOutput>(outputs);
 
-            Assert.IsAssignableFrom<List<UrlMapOutput>>(result);
+            Assert.IsAssignableFrom<UrlMapPageOutput>(result);
         }
 
         #endregion
@@ -177,7 +177,7 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
 
 
         [Fact]
-        public async Task Put_ShouldReturn_SameRawUrl()
+        public async Task Put_ShouldReturn_ShouldUpdate()
         {
             //Arrange
             var urlMapOutputs = await _controller.Get(new UrlMapFilterInput());
@@ -196,6 +196,7 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
 
             //Assert
             Assert.Equal(output.RawUrl, update.RawUrl);
+            Assert.NotEqual(output.Title, update.Title);
         }
 
         #endregion
