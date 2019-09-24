@@ -63,3 +63,4 @@ src/.vs/
 src/**/**/obj/
 src/UrlShorten.Web/bin/
 src/**/**/bin
+src/**/**/*.pubxml
