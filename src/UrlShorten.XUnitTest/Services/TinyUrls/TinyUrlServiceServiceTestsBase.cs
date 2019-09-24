@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Moq;
 using UrlShorten.EntityFrameworkCore;
 using UrlShorten.EntityFrameworkCore.Repositories;
 using UrlShorten.Service.TinyUrls;
 using UrlShorten.Service.TinyUrls.Dto;
-using UrlShorten.UnitTests;
-using UrlShorten.Web.Controllers;
 using Xunit;
 
-namespace UrlShorten.XUnitTest.Services.TinyUrls
+namespace UrlShorten.UnitTests.Services.TinyUrls
 {
     public class TinyUrlServiceServiceTestsBase : UrlShortenUnitTestBase
     {
@@ -38,7 +32,7 @@ namespace UrlShorten.XUnitTest.Services.TinyUrls
 
 
             //Assert
-            Assert.Equal(10, urlMapOutputs.Count);
+            Assert.Equal(10, urlMapOutputs.Items.Count);
         }
 
     }

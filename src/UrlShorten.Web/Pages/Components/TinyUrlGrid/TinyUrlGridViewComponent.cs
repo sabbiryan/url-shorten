@@ -14,13 +14,13 @@ namespace UrlShorten.Web.Pages.Components.TinyUrlGrid
             _tinyUrlService = tinyUrlService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string sorting, int skip = 0, int take =10)
+        public async Task<IViewComponentResult> InvokeAsync(string sorting, int currentPage = 1, int take =10)
         {
             var urlMapOutputs = await _tinyUrlService.GetAll(new UrlMapFilterInput()
             {
                 Sorting = sorting,
+                Page = currentPage,
                 Take = take,
-                Skip = skip
             });
 
             return View(urlMapOutputs);

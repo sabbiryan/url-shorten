@@ -12,7 +12,7 @@ namespace UrlShorten.Service.TinyUrls
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<List<UrlMapOutput>> GetAll(UrlMapFilterInput input);
+        Task<UrlMapPageOutput> GetAll(UrlMapFilterInput input);
 
         /// <summary>
         /// Get an item by id

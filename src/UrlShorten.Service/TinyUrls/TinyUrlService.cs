@@ -34,9 +34,17 @@ namespace UrlShorten.Service.TinyUrls
             UserAgent = userAgent;
         }
 
-        public async Task<List<UrlMapOutput>> GetAll(UrlMapFilterInput input)
+        public async Task<UrlMapPageOutput> GetAll(UrlMapFilterInput input)
         {
-            var urlMaps = await _urlMaRepository.GetAll().OrderByDescending(x=> x.CreationTime).Skip(input.Skip).Take(input.Take).ToListAsync();
+            var queryable = _urlMaRepository.GetAll();
+            if (!string.IsNullOrWhiteSpace(input.Filter))
+            {
+                queryable = queryable.Where(x => x.RawUrl.Contains(input.Filter) || x.Title.Contains(input.Filter));
+            }
+
+            var totalCount = await queryable.CountAsync();
+
+            var urlMaps = await queryable.OrderByDescending(x=> x.CreationTime).Skip(input.Skip).Take(input.Take).ToListAsync();
 
             var outputs = urlMaps.ConvertAll(x => new UrlMapOutput(x)).ToList();
 
@@ -46,7 +54,7 @@ namespace UrlShorten.Service.TinyUrls
                 output.ShortenUrlView = $"{shortenWebRootPath}{output.ShortenUrl}";
             }
 
-            return outputs;
+            return new UrlMapPageOutput(outputs, totalCount);
         }
 
         public async Task<UrlMapOutput> Get(string id)
@@ -61,8 +69,11 @@ namespace UrlShorten.Service.TinyUrls
             var existingUrlMap = await _urlMaRepository.GetAll().AsNoTracking()
                 .FirstOrDefaultAsync(x => x.RawUrl == input.RawUrl);
 
-            if(existingUrlMap != null) throw new Exception($"An existing item with same url already exist"); 
-            //return new UrlMapOutput(existingUrlMap);
+            if(existingUrlMap != null)
+            {
+                //throw new Exception($"An existing item with same url already exist"); 
+                return new UrlMapOutput(existingUrlMap);
+            }
 
             var urlMap = await _urlMaRepository.CreateAsync(new UrlMap()
             {
@@ -81,10 +92,18 @@ namespace UrlShorten.Service.TinyUrls
 
         public async Task<UrlMapOutput> Update(UrlMapInput input)
         {
-            var existingUrlMap = await _urlMaRepository.GetAll().AsNoTracking()
+            var existingUrlMap = await _urlMaRepository.GetAll()
                 .FirstOrDefaultAsync(x => x.RawUrl == input.RawUrl);
 
-            if (existingUrlMap != null) return new UrlMapOutput(existingUrlMap);
+            if (existingUrlMap != null)
+            {
+                existingUrlMap.Title = input.Title;
+                existingUrlMap.Description = input.Description;
+
+                existingUrlMap = await _urlMaRepository.UpdateAsync(existingUrlMap);
+
+                return new UrlMapOutput(existingUrlMap);
+            }
 
 
             var urlMap = await _urlMaRepository.GetAsync(input.Id);
@@ -94,7 +113,7 @@ namespace UrlShorten.Service.TinyUrls
             urlMap.DeviceInfo = UserAgent;
             urlMap.ShortenUrl = ShortenUrlHelper.Encode(urlMap.Identity);
 
-            urlMap =await _urlMaRepository.UpdateAsync(urlMap);
+            urlMap = await _urlMaRepository.UpdateAsync(urlMap);
 
             return new UrlMapOutput(urlMap);
         }

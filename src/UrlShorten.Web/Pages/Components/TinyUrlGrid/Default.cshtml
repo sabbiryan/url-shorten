@@ -1,12 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Routing
-@model System.Collections.Generic.List<UrlShorten.Service.TinyUrls.Dto.UrlMapOutput>
+@model UrlShorten.Service.TinyUrls.Dto.UrlMapPageOutput
 
 <h4>
     Tiny Urls
-    <span class="">
-        <a class="btn btn-outline-info" asp-area="" asp-page="/CreateTinyUrl">Create</a>
-    </span>
+    @*<a class="btn btn-outline-info" asp-area="" asp-page="/TinyUrl/CreateTinyUrl">Create</a>*@
 </h4>
+<h6>
+    <code>Grid loaded view .net core view component</code>
+</h6>
 <div class="row">
     <div class="col-sm-12">
         <table class="table table-striped table-hover">
@@ -17,12 +18,12 @@
                 <th>Shorten URL</th>
                 <th>Original URL</th>
                 <th>Click</th>
-                <th>Action</th>
+                @*<th>Action</th>*@
             </tr>
             </thead>
             <tbody>
 
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
                 <tr>
                     <td>@item.Title</td>
@@ -30,9 +31,9 @@
                     <td>@item.ShortenUrlView</td>
                     <td>@item.RawUrl</td>
                     <td>@item.HitCount</td>
-                    <td>
-                        <a class="text-center" asp-area="" asp-page="/EditTinyUrl" asp-route-id="@item.Id">Edit</a>
-                    </td>
+                    @*<td>
+                        <a class="text-center" asp-area="" asp-page="/TinyUrl/EditTinyUrl" asp-route-id="@item.Id">Edit</a>
+                    </td>*@
                 </tr>
             }
             </tbody>

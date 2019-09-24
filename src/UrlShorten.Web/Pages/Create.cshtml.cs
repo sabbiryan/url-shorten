@@ -34,9 +34,9 @@ namespace UrlShorten.Web.Pages
                 return Page();
             }
 
-            await _tinyUrlService.Create(UrlMap);
+            var urlMapOutput = await _tinyUrlService.Create(UrlMap);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new {filter = urlMapOutput.RawUrl});
         }
     }
 }

@@ -21,7 +21,7 @@ namespace UrlShorten.Web.Controllers
 
         // GET: api/TinyUrl
         [HttpGet]
-        public async Task<List<UrlMapOutput>> Get([FromQuery] UrlMapFilterInput input)
+        public async Task<UrlMapPageOutput> Get([FromQuery] UrlMapFilterInput input)
         {
             return await _tinyUrlService.GetAll(input);
         }

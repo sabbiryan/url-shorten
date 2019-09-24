@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Moq;
 using UrlShorten.EntityFrameworkCore;
 using UrlShorten.EntityFrameworkCore.Repositories;
 using UrlShorten.Service.TinyUrls;
@@ -36,24 +35,24 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
             var outputs = await _controller.Get(new UrlMapFilterInput());
 
             //Assert
-            Assert.Equal(10, outputs.Count());
+            Assert.Equal(10, outputs.Items.Count());
         }
 
         [Fact]
         public async Task GetAll_ShouldReturn2Items()
         {
             //Arrange
-            var outputs = await _controller.Get(new UrlMapFilterInput()
+            UrlMapPageOutput outputs = await _controller.Get(new UrlMapFilterInput()
             {
                 Take = 2
             });
 
             //Assert
-            var result = Assert.IsType<List<UrlMapOutput>>(outputs);
+            var result = Assert.IsType<UrlMapPageOutput> (outputs);
 
-            var model = Assert.IsAssignableFrom<List<UrlMapOutput>>(result);
+            var model = Assert.IsAssignableFrom<UrlMapPageOutput>(result);
 
-            Assert.Equal(2, model.Count());
+            Assert.Equal(2, model.Items.Count);
         }
 
         [Fact]
@@ -76,7 +75,7 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
         {
             var urlMapOutputs = await _controller.Get(new UrlMapFilterInput());
 
-            var urlMapOutput = await _controller.Get(urlMapOutputs.FirstOrDefault()?.Id);
+            var urlMapOutput = await _controller.Get(urlMapOutputs.Items.FirstOrDefault()?.Id);
 
             var result = Assert.IsType<UrlMapOutput>(urlMapOutput);
 
@@ -88,7 +87,7 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
         {
             var urlMapOutputs = await _controller.Get(new UrlMapFilterInput());
 
-            var urlMapOutput = await _controller.Get(urlMapOutputs.FirstOrDefault()?.Id);
+            var urlMapOutput = await _controller.Get(urlMapOutputs.Items.FirstOrDefault()?.Id);
 
             var result = Assert.IsType<UrlMapOutput>(urlMapOutput);
 
@@ -136,7 +135,7 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
             });
 
 
-            Assert.Equal(urlMapOutputsBeforeInsert.Count + 1, urlMapOutputsAfterInsert.Count);
+            Assert.Equal(urlMapOutputsBeforeInsert.Items.Count + 1, urlMapOutputsAfterInsert.Items.Count);
         }
 
 
@@ -168,7 +167,7 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
 
 
             //Assert
-            Assert.Equal(urlMapOutputsBeforeInsert.Count, urlMapOutputsAfterInsert.Count);
+            Assert.Equal(urlMapOutputsBeforeInsert.Items.Count, urlMapOutputsAfterInsert.Items.Count);
         }
 
         #endregion
@@ -182,7 +181,7 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
         {
             //Arrange
             var urlMapOutputs = await _controller.Get(new UrlMapFilterInput());
-            var output = urlMapOutputs.First();
+            var output = urlMapOutputs.Items.First();
 
 
             //Act
@@ -199,6 +198,27 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
             Assert.Equal(output.RawUrl, update.RawUrl);
         }
 
+        #endregion
+
+
+
+        #region Delet Tests
+
+        [Fact]
+        public async Task Delete_ShouldReturn_IsDeletedTrue()
+        {
+            //Arrange
+            var urlMapOutputs = await _controller.Get(new UrlMapFilterInput());
+            var output = urlMapOutputs.Items.First();
+
+            //Act
+            await _controller.Delete(output.Id);
+            var urlMapOutput = await _controller.Get(output.Id);
+
+            //Assert
+            Assert.NotEqual(output.IsDeleted, urlMapOutput.IsDeleted);
+            Assert.True(urlMapOutput.IsDeleted);
+        }
 
 
         #endregion
