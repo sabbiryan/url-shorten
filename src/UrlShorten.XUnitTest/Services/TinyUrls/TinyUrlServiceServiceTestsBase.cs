@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using UrlShorten.EntityFrameworkCore;
 using UrlShorten.EntityFrameworkCore.Repositories;
@@ -17,9 +18,10 @@ namespace UrlShorten.UnitTests.Services.TinyUrls
 
         public TinyUrlServiceServiceTestsBase()
         {
-            
+
             _tinyUrlService = new TinyUrlService(new Repository<UrlMap, string>(new AppDbContext(Options)),
-                new ConfigurationRoot(new List<IConfigurationProvider>()));
+                new ConfigurationRoot(new List<IConfigurationProvider>()), new HttpContextAccessor(),
+                new Repository<HitLog, string>(new AppDbContext(Options)));
         }
 
         [Fact]

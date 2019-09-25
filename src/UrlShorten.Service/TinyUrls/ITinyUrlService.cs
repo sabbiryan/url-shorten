@@ -69,5 +69,13 @@ namespace UrlShorten.Service.TinyUrls
         /// </summary>
         /// <param name="userAgent"></param>
         void SetUserAgent(StringValues userAgent);
+
+
+        /// <summary>
+        /// Get redirect url from relative path
+        /// </summary>
+        /// <param name="relativePath"></param>
+        /// <returns></returns>
+        Task<string> GetRedirectUrl(string relativePath);
     }
 }

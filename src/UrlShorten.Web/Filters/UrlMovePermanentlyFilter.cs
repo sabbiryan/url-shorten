@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using NLog;
 using UrlShorten.EntityFrameworkCore;
 using UrlShorten.EntityFrameworkCore.Repositories;
+using ILogger = NLog.ILogger;
 
 namespace UrlShorten.Web.Filters
 {
@@ -16,13 +19,16 @@ namespace UrlShorten.Web.Filters
         private readonly IRepository<UrlMap, string> _urlMapRepository;
         private readonly IRepository<HitLog, string> _hitLogRepository;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<UrlMovePermanentlyFilter> _logger;
 
         public UrlMovePermanentlyFilter(IRepository<UrlMap, string> urlMapRepository, IConfiguration configuration, 
-            IRepository<HitLog, string> hitLogRepository)
+            IRepository<HitLog, string> hitLogRepository, 
+            ILogger<UrlMovePermanentlyFilter> logger)
         {
             _urlMapRepository = urlMapRepository;
             _configuration = configuration;
             _hitLogRepository = hitLogRepository;
+            _logger = logger;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -31,10 +37,13 @@ namespace UrlShorten.Web.Filters
             var requestUrl =
                 $"{context.HttpContext.Request.Scheme}://{context.HttpContext.Request.Host}{context.HttpContext.Request.Path}{context.HttpContext.Request.QueryString.Value}";
 
+            _logger.LogTrace($"Requested URL: {requestUrl}");
 
-            var value = _configuration.GetValue<string>("App:ShortenWebRootPath");
+            var value = _configuration.GetValue<string>("App:ShortenWebRootPathReplaceValue");
 
             var relativeValue = requestUrl.Replace(value, "");
+
+            _logger.LogTrace($"Relative Path: {requestUrl}");
 
             var urlMap = await _urlMapRepository.GetAll().FirstOrDefaultAsync(x => x.ShortenUrl == relativeValue);
 
@@ -55,7 +64,7 @@ namespace UrlShorten.Web.Filters
 
                 return;
             }
-
+            
             // next() calls the action method.
             var resultContext = await next();
             // resultContext.Result is set.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using UrlShorten.EntityFrameworkCore;
 using UrlShorten.EntityFrameworkCore.Repositories;
@@ -20,7 +21,8 @@ namespace UrlShorten.UnitTests.Controllers.TinyUrl
         {
             _controller = new TinyUrlController(new TinyUrlService(
                 new Repository<UrlMap, string>(new AppDbContext(Options)),
-                new ConfigurationRoot(new List<IConfigurationProvider>())));
+                new ConfigurationRoot(new List<IConfigurationProvider>()), new HttpContextAccessor(),
+                new Repository<HitLog, string>(new AppDbContext(Options))));
         }
 
         #region Test Get All
