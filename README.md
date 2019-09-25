@@ -11,6 +11,7 @@ See the demo : http://sabbirahamed.com/
 3. Integrated NLog
 4. Integratated swagger
 5. Includes unit test coverage using xunit
+6. Copy to clipboard
 
 #### Instructions
 1. Clone repository
