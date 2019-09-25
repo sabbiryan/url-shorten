@@ -3,7 +3,7 @@
 See the demo : http://sabbirahamed.com/
 
 #### Dependencies
-1. dotnet core 2.2
+1. dotnet core 2.2 sdk
 
 #### Features
 1. CRUD for tiny url
@@ -11,3 +11,13 @@ See the demo : http://sabbirahamed.com/
 3. Integrated NLog
 4. Integratated swagger
 5. Includes unit test coverage using xunit
+
+#### Instructions
+1. Clone repository
+2. Open on visual studio 2019
+3. Check the connection string on appsettings.json (you may need to change the server name)
+4. Open package manager console, select UrlShorten.EntityFrameworkCore project and run update-database
+5. Be sure UrlShorten.Web is set as startu project
+6. Use ctrl + f5 to run the project
+
+Enjoy!!!
