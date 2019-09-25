@@ -20,4 +20,7 @@ See the demo : http://sabbirahamed.com/
 5. Be sure UrlShorten.Web is set as startu project
 6. Use ctrl + f5 to run the project
 
+#### Note
+1. You can repalce appsetting.json "ShortenWebRootPath": "http://localhost:59326/api/Play/" with your own url mapping.
+
 Enjoy!!!
