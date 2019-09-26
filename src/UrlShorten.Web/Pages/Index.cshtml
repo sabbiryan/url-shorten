@@ -79,7 +79,15 @@
 
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.RawUrl)
+                            @if (item.RawUrl.Length > 15)
+                            {
+                                <span data-toggle="tooltip" title="@item.RawUrl">@item.RawUrl.Substring(0, 15)</span><span>.....</span>
+                            }
+                            else
+                            {
+                                <span>@item.RawUrl</span>
+                            }
+                            <button class="btn btn-sm far fa-copy" data-toggle="tooltip" title="Copy to clipboard" data-clipboard-text="@item.RawUrl"></button>
                         </td>
 
                         <td>
