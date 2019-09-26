@@ -18,7 +18,7 @@ See the demo : http://sabbirahamed.com/
 2. Open on visual studio 2019
 3. Check the connection string on appsettings.json (you may need to change the server name)
 4. Open package manager console, select UrlShorten.EntityFrameworkCore project and run update-database
-5. Be sure UrlShorten.Web is set as startu project
+5. Be sure UrlShorten.Web is set as startup project
 6. Use ctrl + f5 to run the project
 
 #### Note
