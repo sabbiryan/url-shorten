@@ -45,7 +45,7 @@ namespace UrlShorten.Web.Filters
 
             _logger.LogTrace($"Relative Path: {requestUrl}");
 
-            var urlMap = await _urlMapRepository.GetAll().FirstOrDefaultAsync(x => x.ShortenUrl == relativeValue);
+            var urlMap = await _urlMapRepository.GetAll().FirstOrDefaultAsync(x => string.Equals(x.ShortenUrl, relativeValue, StringComparison.InvariantCulture));
 
             if (urlMap != null)
             {

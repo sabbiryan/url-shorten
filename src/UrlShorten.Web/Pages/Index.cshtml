@@ -25,78 +25,84 @@
     </div>
 </form>
 
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Click
-            </th>
-            <th>
-                Created
-            </th>
-            <th>
-                Shorten Url
-            </th>
-            <th>
-                Original Url
-            </th>
+<div class="row">
+    <div class="col-sm-12">
 
-            <th>
-                Action
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.Result.Items)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HitCount)
-            </td>
-            <td>
-                @item.CreationTime.ToShortDateString()
-            </td>
-            <td>
-                <button class="btn btn-sm far fa-copy" data-toggle="tooltip" title="Copy to clipboard" data-clipboard-text="@item.ShortenUrlView"></button>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Click
+                    </th>
+                    <th>
+                        Created
+                    </th>
+                    <th>
+                        Shorten Url
+                    </th>
+                    <th>
+                        Original Url
+                    </th>
 
-                <a id="copy-@item.Identity" target="_blank" href="@item.ShortenUrlView">@Html.DisplayFor(modelItem => item.ShortenUrlView)</a>
-
-
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RawUrl)
-            </td>
-
-            <td>
-                @if (!item.IsDeleted)
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Result.Items)
                 {
-                    <span>
-                        <a asp-page="./Edit" asp-route-id="@item.Id" class="fa fa-edit" data-toggle="tooltip" title="Edit"></a>
-                        <a asp-page="./Details" asp-route-id="@item.Id" class="fa fa-eye" data-toggle="tooltip" title="View Details"></a>
-                        <a asp-page="./Delete" asp-route-id="@item.Id" class="fa fa-trash" data-toggle="tooltip" title="Delete"></a>
-                    </span>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HitCount)
+                        </td>
+                        <td>
+                            @item.CreationTime.ToShortDateString()
+                        </td>
+                        <td>
+                            <button class="btn btn-sm far fa-copy" data-toggle="tooltip" title="Copy to clipboard" data-clipboard-text="@item.ShortenUrlView"></button>
+
+                            <a id="copy-@item.Identity" target="_blank" href="@item.ShortenUrlView">@Html.DisplayFor(modelItem => item.ShortenUrlView)</a>
+
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RawUrl)
+                        </td>
+
+                        <td>
+                            @if (!item.IsDeleted)
+                            {
+                                <span>
+                                    <a asp-page="./Edit" asp-route-id="@item.Id" class="fa fa-edit" data-toggle="tooltip" title="Edit"></a>
+                                    <a asp-page="./Details" asp-route-id="@item.Id" class="fa fa-eye" data-toggle="tooltip" title="View Details"></a>
+                                    <a asp-page="./Delete" asp-route-id="@item.Id" class="fa fa-trash" data-toggle="tooltip" title="Delete"></a>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-warning">Deleted</span>
+                            }
+                        </td>
+                    </tr>
                 }
-                else
-                {
-                    <span class="badge badge-warning">Deleted</span>
-                }
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+            </tbody>
+        </table>
+
+    </div>
+</div>
 
 <div class="row">
     <div class="col-sm-9">
