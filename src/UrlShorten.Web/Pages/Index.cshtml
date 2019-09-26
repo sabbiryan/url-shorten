@@ -63,7 +63,14 @@
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Description)
+                            @if (item.Description?.Length > 10)
+                            {
+                                <span data-toggle="tooltip" title="@item.Description">@item.Description.Substring(0, 10)</span><span>...</span>
+                            }
+                            else
+                            {
+                                <span>@item.Description</span>
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.HitCount)
@@ -81,7 +88,7 @@
                         <td>
                             @if (item.RawUrl.Length > 15)
                             {
-                                <span data-toggle="tooltip" title="@item.RawUrl">@item.RawUrl.Substring(0, 15)</span><span>.....</span>
+                                <span data-toggle="tooltip" title="@item.RawUrl">@item.RawUrl?.Substring(0, 15)</span><span>...</span>
                             }
                             else
                             {
