@@ -16,7 +16,7 @@ namespace UrlShorten.EntityFrameworkCore
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UrlMap>().Property(e => e.Identity).Metadata.AfterSaveBehavior = PropertySaveBehavior.Ignore;
+            modelBuilder.Entity<UrlMap>().Property(e => e.Identity).Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
         }
 
 

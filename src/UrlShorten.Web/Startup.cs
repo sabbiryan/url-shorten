@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using UrlShorten.EntityFrameworkCore;
 using UrlShorten.EntityFrameworkCore.Repositories;
@@ -58,11 +59,8 @@ namespace UrlShorten.Web
                     providerOptions => providerOptions.CommandTimeout(60))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll));
 
-            services.AddMvc(service =>
-                {
-                    service.Filters.Add(typeof(UrlMovePermanentlyFilter));
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(service => { service.Filters.Add(typeof(UrlMovePermanentlyFilter)); })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddLogging();
 
@@ -70,7 +68,14 @@ namespace UrlShorten.Web
             services.AddTransient<ITinyUrlService, TinyUrlService>();
 
             // Inject an implementation of ISwaggerProvider with defaulted settings applied
-            services.AddSwaggerGen(options => { options.SwaggerDoc("v1", new Info {Title = SwaggerTitle, Version = "v1"}); });
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("url-shorten", new OpenApiInfo()
+                {
+                    Title = SwaggerTitle,
+                    Version = "v1"
+                });
+            });
 
         }
 
