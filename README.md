@@ -1,21 +1,18 @@
-### Simple URL Tiny Service
-
-See the demo : http://sabbirahamed.com/
+### Goal
+Build and configur a url shorten service using .net core and deploy it on cloud.
 
 #### Technologies
 1. .Net Core 3.1
 2. Entity Framework Core 3.1.3
-3. Inegrated NLog
-4. Integrated Swagger
+3. NLog
+4. Swagger
+5. xUnit
 
 
 #### Features
 1. CRUD for tiny url
 2. Public APIs for developer
-3. Integrated NLog
-4. Integratated swagger
-5. Includes unit test coverage using xunit
-6. Copy to clipboard
+3. Copy to clipboard
 
 #### Instructions
 1. Clone repository
