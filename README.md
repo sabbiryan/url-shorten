@@ -3,7 +3,7 @@
 See the demo : http://sabbirahamed.com/
 
 #### Dependencies
-1. dotnet core 2.2 sdk
+1. dotnet core 3.1 sdk
 
 #### Features
 1. CRUD for tiny url
