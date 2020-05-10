@@ -2,8 +2,12 @@
 
 See the demo : http://sabbirahamed.com/
 
-#### Dependencies
-1. dotnet core 3.1 sdk
+#### Technologies
+1. .Net Core 3.1
+2. Entity Framework Core 3.1.3
+3. Inegrated NLog
+4. Integrated Swagger
+
 
 #### Features
 1. CRUD for tiny url
