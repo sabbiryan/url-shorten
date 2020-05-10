@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
@@ -59,6 +60,8 @@ namespace UrlShorten.Web
                     providerOptions => providerOptions.CommandTimeout(60))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll));
 
+            services.AddRazorPages();
+
             services.AddMvc(service => { service.Filters.Add(typeof(UrlMovePermanentlyFilter)); })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
@@ -70,7 +73,7 @@ namespace UrlShorten.Web
             // Inject an implementation of ISwaggerProvider with defaulted settings applied
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("url-shorten", new OpenApiInfo()
+                options.SwaggerDoc("v1", new OpenApiInfo()
                 {
                     Title = SwaggerTitle,
                     Version = "v1"
@@ -80,7 +83,7 @@ namespace UrlShorten.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseStatusCodePages(async context =>
             {
@@ -162,7 +165,14 @@ namespace UrlShorten.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
 
 
             // Enable middleware to serve generated Swagger as a JSON endpoint

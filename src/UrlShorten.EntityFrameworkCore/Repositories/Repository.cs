@@ -32,8 +32,8 @@ namespace UrlShorten.EntityFrameworkCore.Repositories
 
         public Task<T> GetAsync(TKey id)
         {
-            var findAsync = _dbContext.Set<T>().FirstOrDefaultAsync(x=> (object)x.Id == (object)id);
-            return findAsync;
+            var findAsync = _dbContext.Set<T>().FindAsync(id);
+            return findAsync.AsTask();
         }
 
         public T Create(T entity)

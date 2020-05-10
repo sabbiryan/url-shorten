@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 
 namespace UrlShorten.Web.Pages
 {
     public class LogModel : PageModel
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IConfiguration _configuration;
 
-        public LogModel(IHostingEnvironment hostingEnvironment, 
+        public LogModel(IWebHostEnvironment hostingEnvironment, 
             IConfiguration configuration)
         {
             _hostingEnvironment = hostingEnvironment;
